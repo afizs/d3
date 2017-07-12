@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>This is D3JS</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <script>
+    dataArray = [10,20, 30, 40, 60]; // 60 * 10 won't fit in our canvas so we make use of scales.
+    width = 500;
+    height = 500;
+
+    var widthScale = d3.scaleLinear()
+                      .domain([0,60])
+                      .range([0, width]);
+
+    var colorScale = d3.scaleLinear()
+                      .domain([0, 60])
+                      .range(["black", "blue"]);
+
+    var canvas = d3.select("body").append("svg")
+    				.attr("width", width)
+    				.attr("height", height);
+
+    var bars = canvas.selectAll("rect")
+                .data(dataArray)
+                .enter()
+                  .append("rect")
+                  .attr("width", function(d){return widthScale(d);})
+                  .attr("height", 50)
+                  .attr("fill", function(d){return colorScale(d);})
+                  .attr("y", function(d, i){return i*60;});
+
+  </script>
+</html>
