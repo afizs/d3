@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>This is D3JS</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <script>
+    dataArray = [10,20, 30, 40, 60]; // 60 * 10 won't fit in our canvas so we make use of scales.
+    width = 1000;
+    height = 1000;
+
+    var widthScale = d3.scaleLinear()
+                      .domain([0,60])
+                      .range([0, width/2]);
+
+    var colorScale = d3.scaleLinear()
+                      .domain([0, 60])
+                      .range(["black", "blue"]);
+
+    var axis = d3.axisBottom()
+                .ticks(6)
+                .scale(widthScale);
+
+    var canvas = d3.select("body").append("svg")
+    				.attr("width", width/2)
+    				.attr("height", height/2)
+            .append("g") // group all the elements on canvas.
+            .attr("transform", "translate(20, 0)")
+            .call(axis); // move the canvas to 20, 0
+
+    var bars = canvas.selectAll("rect")
+                .data(dataArray)
+                .enter()
+                  .append("rect")
+                  .attr("width", function(d){return widthScale(d);})
+                  .attr("height", 50)
+                  .attr("fill", function(d){return colorScale(d);})
+                  .attr("y", function(d, i){return i*60;});
+
+    var colorScale_1 = d3.scaleLinear()
+                      .domain([0, 60])
+                      .range(["yellow", "red"]);
+
+    var canvas_1 = d3.select("body").append("svg")
+    				.attr("width", width/2)
+    				.attr("height", height/2)
+            .append("g") // group all the elements on canvas.
+            .attr("transform", "translate(10, 0)");
+
+    var bars_1 = canvas_1.selectAll("rect")
+                .data(dataArray)
+                .enter()
+                  .append("rect")
+                  .attr("width", function(d){return widthScale(d);})
+                  .attr("height", 50)
+                  .attr("fill", function(d){return colorScale_1(d);})
+                  .attr("y", function(d, i){return i*60;});
+
+        canvas_1.append("g")
+                .attr("transform", "translate(0, 300)")
+                .call(axis);
+
+
+  </script>
+</html>
