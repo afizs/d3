@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>This is D3JS</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <script>
+  /*
+  data elements are same as # DOM objects then update function comes into picture.
+  */
+  dataArray = [10, 20 , 30]
+
+  var canvas = d3.select("body")
+                .append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+  var circle = canvas.append("circle")
+                  .attr("cx", 50)
+                  .attr("cy", 100)
+                  .attr("r", 25)
+                  .attr("fill", "orange")
+
+  var circle_1 = canvas.append("circle")
+                  .attr("cx", 100)
+                  .attr("cy", 100)
+                  .attr("r", 25)
+                  .attr("fill", "blue")
+
+  var circle_2 = canvas.append("circle")
+                  .attr("cx", 150)
+                  .attr("cy", 100)
+                  .attr("r", 25)
+                  .attr("fill", "yellow")
+
+  d3.scaleOrdinal(d3.schemeCategory20);
+  var color = d3.scaleOrdinal(d3.schemeCategory20b);
+
+  var circles = canvas.selectAll("circle")
+                  .data(dataArray)
+                  .attr("fill", "red") // update
+                  .enter()
+                    .append("circle")
+                    .attr("cx", function(d, i){return i*50;})
+                    .attr("cy", 50)
+                    .attr("r", 25)
+                    .attr("fill", function(d, i){return color(i);});
+  </script>
+</body>
+
+</html>
